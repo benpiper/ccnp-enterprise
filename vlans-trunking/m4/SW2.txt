@@ -1,0 +1,150 @@
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4203236992
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4203236992
+ revocation-check none
+ rsakeypair TP-self-signed-4203236992
+!
+!
+crypto pki certificate chain TP-self-signed-4203236992
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34323033 32333639 3932301E 170D3933 30333031 30303030
+  35365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32303332
+  33363939 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100DCA9 D558625C ABEB82D6 BD34AC86 8D83BF2D 6DA70758 836C44C5 CBCD10E4
+  94CAA2E1 2CA20815 07938EF3 AD34F794 78B1092F D000D05C 8656BBD9 EF720988
+  1FD51759 C558CC63 591FED2A F384FF27 B9E342D0 B1725A2C 3CE4DE66 1E802143
+  500A453A 5EB19033 A9B82FFA B10F2CF0 6E0ECDF2 DE2E5212 E918985B C4439CCE
+  A1830203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 143C0B49 B384FDEF 73DFA804 7BDF9ABA CC3A5EAB 62301D06
+  03551D0E 04160414 3C0B49B3 84FDEF73 DFA8047B DF9ABACC 3A5EAB62 300D0609
+  2A864886 F70D0101 05050003 81810080 71B70BB3 B1E6C3AC F1846742 AF9419D2
+  583BBA97 561A3986 51BB73E2 F4DFA77B AE61E128 057BF460 991999FB D4DFEE0B
+  A1BDB557 53B9C3B8 ECBCE75E C81A6A9C 4B8B6144 38544171 FC6F2DDE 773336CE
+  56ACF27C 00733D3C 3CB2BBAD 54D0894B A744DFB0 E9989939 8C0EA657 E17E1F28
+  9D77994F 94B10B26 FC0E47D0 0C7FCB
+        quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+vlan dot1q tag native
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 300
+ switchport mode dynamic desirable
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+line con 0
+ speed 19200
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end

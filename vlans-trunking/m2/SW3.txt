@@ -1,0 +1,144 @@
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4202948864
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4202948864
+ revocation-check none
+ rsakeypair TP-self-signed-4202948864
+!
+!
+crypto pki certificate chain TP-self-signed-4202948864
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34323032 39343838 3634301E 170D3933 30333031 30303030
+  35365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32303239
+  34383836 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100BE73 D6A3E9D5 3EEB8DF8 C749CD0C EFD172BA 5EA038F9 13067FAA 2AA97385
+  84937285 F5B3B3C1 F48488C8 D12442CE A8D2C322 2F8F82C1 504898B7 512F797B
+  A054D10C D4F83B77 05F07B44 E3DCA1F6 B4549A5D 99DD4763 5C8EB23D 3E9B3742
+  5D7D2A68 A23B631A 50D20054 5014F4AF A2AED0CC D23967AB 25003DFE A6B576EC
+  26590203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 1490CADC 964A49CD 3883DF4A F9A3F5F9 715CDFF2 AB301D06
+  03551D0E 04160414 90CADC96 4A49CD38 83DF4AF9 A3F5F971 5CDFF2AB 300D0609
+  2A864886 F70D0101 05050003 818100AF 3B241B19 BB7A3621 D38BEE57 2D96BE16
+  91B6FD96 D132E90B 3172C432 53FF3E13 89B4D39F BA20A88D C5D73491 A543C72D
+  03901305 0833771D 85236449 32974FFA 48F45059 6C2751BC 0C04A28B E48D7F5B
+  DC760188 1BB08868 4F9D2110 97E5CA29 E41C56E7 547E7863 DE938AE3 D33650B6
+  710D912F 0A20AA59 7321DABA 7C9A02
+        quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+line con 0
+ speed 19200
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end

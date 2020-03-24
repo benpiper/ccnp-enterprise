@@ -1,0 +1,17 @@
+SW1#sh vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 :
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Disabled
+Device ID                       : 0015.f9fb.1e80
+Configuration last modified by 0.0.0.0 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 12
+Configuration Revision            : 0
+MD5 digest                        : 0xC3 0xC4 0x9B 0xE3 0x47 0x45 0xBC 0x39
+                                    0x2E 0x12 0xC3 0x0A 0xC5 0x45 0x1A 0x84

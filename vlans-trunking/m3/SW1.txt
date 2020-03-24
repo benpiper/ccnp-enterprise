@@ -1,0 +1,228 @@
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+vtp mode transparent
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4193984128
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4193984128
+ revocation-check none
+ rsakeypair TP-self-signed-4193984128
+!
+!
+crypto pki certificate chain TP-self-signed-4193984128
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34313933 39383431 3238301E 170D3933 30333031 30303030
+  35395A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 31393339
+  38343132 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100AC80 4BDD644E 8D4971CC 4FA81E69 B3A3D0C6 B6EE8BFC 408C6C54 0296CF9C
+  071508DB C63FD3FD FE231198 522E1706 5E38023A 5B4418DF EFD98687 2599BE79
+  6EE5DBA0 A991CBAE 1F8DC4CF 379C2D74 3BF6ED3E 106F6762 82D540BE AC209533
+  EA0D61CA 6CD121E4 9DE52C4F CDB98A21 FA316E93 734D00E8 18FB1B28 46E04C32
+  48850203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 140E0DD5 FB9C8986 73C0E1ED 9FB46FA1 9B82E290 75301D06
+  03551D0E 04160414 0E0DD5FB 9C898673 C0E1ED9F B46FA19B 82E29075 300D0609
+  2A864886 F70D0101 05050003 81810080 11C79D73 ECF66864 1A3F8277 765A5142
+  DE8E1887 D2CCFD28 DF2BA537 827B4D73 56CA5C0A 9B69DE5B 77E06777 680615F6
+  A7466946 89FC9332 777AE9AF 0A9FBB69 5BACB5AA D5F2AEA3 5309D9D3 0FC0B1CF
+  715409A4 9F5E23F0 16037244 56E43342 FCA1FA47 FA34BA77 ECB771A4 C72D808F
+  A4FF646B 2FD073DD DC66E147 11E412
+        quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 100
+ name DATA
+!
+vlan 120
+ name VOICE
+!
+vlan 200
+  private-vlan primary
+  private-vlan association 204,223
+!
+vlan 204
+  private-vlan community
+!
+vlan 223
+  private-vlan community
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/2
+ switchport access vlan 100
+ switchport private-vlan host-association 200 223
+ switchport mode private-vlan host
+!
+interface FastEthernet0/3
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/4
+ switchport access vlan 100
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/6
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/7
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/8
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/9
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/10
+ switchport access vlan 100
+ switchport mode access
+ switchport voice vlan 120
+ spanning-tree portfast
+!
+interface FastEthernet0/11
+ switchport access vlan 100
+ switchport private-vlan host-association 200 223
+ switchport mode private-vlan host
+!
+interface FastEthernet0/12
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/13
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/14
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/15
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/16
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/17
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/18
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/19
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/20
+ switchport access vlan 100
+ switchport private-vlan host-association 200 204
+ switchport mode private-vlan host
+!
+interface FastEthernet0/21
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/22
+ switchport access vlan 100
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 100
+ switchport private-vlan host-association 200 223
+ switchport mode private-vlan host
+!
+interface FastEthernet0/24
+ switchport access vlan 100
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+line con 0
+ speed 19200
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
