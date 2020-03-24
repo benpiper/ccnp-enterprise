@@ -6,6 +6,8 @@
 
 [Implementing OSPF](implementing-ospf)
 
+[VLANs and Trunking](vlans-trunking)
+
 ## Objective Map
 
 | Course | ENCOR | ENARSI |
