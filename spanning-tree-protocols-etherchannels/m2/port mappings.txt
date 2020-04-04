@@ -1,0 +1,10 @@
+SW1 fa0/2 <> SW3 fa0/1
+SW1 fa0/4 <> SW3 fa0/3
+SW1 fa0/23 <> SW2 fa0/1
+SW1 fa0/24 <> SW2 fa0/2
+SW2 fa0/4 <> SW3 fa0/19
+SW2 fa0/6 <> SW3 fa0/21
+SW3 fa0/23 <> SW4 fa0/1
+SW3 fa0/24 <> SW4 fa0/2
+SW2 fa0/22 <> SW4 fa0/21
+SW2 fa0/24 <> SW4 fa0/23
