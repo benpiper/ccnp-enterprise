@@ -1,0 +1,168 @@
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW2-client
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip domain-name benpiper.com
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4203236992
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4203236992
+ revocation-check none
+ rsakeypair TP-self-signed-4203236992
+!
+!
+crypto pki certificate chain TP-self-signed-4203236992
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34323033 32333639 3932301E 170D3933 30333031 30303030
+  35375A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32303332
+  33363939 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100DCA9 D558625C ABEB82D6 BD34AC86 8D83BF2D 6DA70758 836C44C5 CBCD10E4
+  94CAA2E1 2CA20815 07938EF3 AD34F794 78B1092F D000D05C 8656BBD9 EF720988
+  1FD51759 C558CC63 591FED2A F384FF27 B9E342D0 B1725A2C 3CE4DE66 1E802143
+  500A453A 5EB19033 A9B82FFA B10F2CF0 6E0ECDF2 DE2E5212 E918985B C4439CCE
+  A1830203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 143C0B49 B384FDEF 73DFA804 7BDF9ABA CC3A5EAB 62301D06
+  03551D0E 04160414 3C0B49B3 84FDEF73 DFA8047B DF9ABACC 3A5EAB62 300D0609
+  2A864886 F70D0101 05050003 81810068 29C02636 A6B4FEBE 6464C970 6344DF17
+  73EA12E3 4B225E2F 89D16234 734ADCB5 1A993B82 F51EE070 27A5C40F 4BFAE223
+  8F5B268B 2E106023 E2F1D344 CD69ED5B 62BF8A13 3F5AAE07 A6D12232 05DD98CB
+  A9F1612F 52A342CE 0F8C7201 E8B3B1D6 F0E63DA9 A753FD0B C49F23F9 1D321390
+  8E2167A3 3C61C805 4649BBBD E44A9E
+        quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ shutdown
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+ shutdown
+!
+interface FastEthernet0/4
+ shutdown
+!
+interface FastEthernet0/5
+ shutdown
+!
+interface FastEthernet0/6
+ shutdown
+!
+interface FastEthernet0/7
+ shutdown
+!
+interface FastEthernet0/8
+ shutdown
+!
+interface FastEthernet0/9
+ shutdown
+!
+interface FastEthernet0/10
+ shutdown
+!
+interface FastEthernet0/11
+ shutdown
+!
+interface FastEthernet0/12
+ shutdown
+!
+interface FastEthernet0/13
+ shutdown
+!
+interface FastEthernet0/14
+ shutdown
+!
+interface FastEthernet0/15
+ shutdown
+!
+interface FastEthernet0/16
+ shutdown
+!
+interface FastEthernet0/17
+ shutdown
+!
+interface FastEthernet0/18
+ shutdown
+!
+interface FastEthernet0/19
+ shutdown
+!
+interface FastEthernet0/20
+ shutdown
+!
+interface FastEthernet0/21
+ shutdown
+!
+interface FastEthernet0/22
+ shutdown
+!
+interface FastEthernet0/23
+ shutdown
+!
+interface FastEthernet0/24
+ shutdown
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+line con 0
+ speed 19200
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end

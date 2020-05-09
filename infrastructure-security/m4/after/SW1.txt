@@ -1,0 +1,186 @@
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+username ben privilege 15 secret 5 $1$2OA/$m6zIQPFVeEsVU0hsnlU9/1
+no aaa new-model
+system mtu routing 1500
+ip arp inspection vlan 1
+ip domain-name benpiper.com
+!
+!
+ip dhcp snooping vlan 1
+no ip dhcp snooping information option
+ip dhcp snooping database flash:snoop.txt
+ip dhcp snooping
+!
+!
+crypto pki trustpoint TP-self-signed-4193984128
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4193984128
+ revocation-check none
+ rsakeypair TP-self-signed-4193984128
+!
+!
+crypto pki certificate chain TP-self-signed-4193984128
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34313933 39383431 3238301E 170D3933 30333031 30303032
+  35335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 31393339
+  38343132 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100AC80 4BDD644E 8D4971CC 4FA81E69 B3A3D0C6 B6EE8BFC 408C6C54 0296CF9C
+  071508DB C63FD3FD FE231198 522E1706 5E38023A 5B4418DF EFD98687 2599BE79
+  6EE5DBA0 A991CBAE 1F8DC4CF 379C2D74 3BF6ED3E 106F6762 82D540BE AC209533
+  EA0D61CA 6CD121E4 9DE52C4F CDB98A21 FA316E93 734D00E8 18FB1B28 46E04C32
+  48850203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 140E0DD5 FB9C8986 73C0E1ED 9FB46FA1 9B82E290 75301D06
+  03551D0E 04160414 0E0DD5FB 9C898673 C0E1ED9F B46FA19B 82E29075 300D0609
+  2A864886 F70D0101 05050003 8181000E 4A02E069 FB7B63F8 8048E98E 77B572DB
+  8E5F17C1 F86ADF8A 363083C4 22BE08D9 CAE2F9B0 CC44DD7B 2B078662 47349054
+  9A62531A D132CB9C 00207D1E BEF9BD9F 8C606C34 374A5C7D CA738850 BDC1EEC6
+  7364D8C4 95959F74 576B0EF2 8EFF54B8 527CFB4F F26ABC61 5B7A09B8 212873E5
+  97BDBDC3 69CC08B4 C3F39EFC AF819C
+        quit
+!
+!
+!
+!
+!
+errdisable recovery cause storm-control
+errdisable recovery interval 30
+spanning-tree mode pvst
+spanning-tree portfast default
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ ip verify source
+!
+interface FastEthernet0/2
+ description SW3-server
+ ip arp inspection trust
+ ip verify source
+ ip dhcp snooping trust
+!
+interface FastEthernet0/3
+ ip verify source
+!
+interface FastEthernet0/4
+ ip verify source
+!
+interface FastEthernet0/5
+ ip verify source
+!
+interface FastEthernet0/6
+ ip verify source
+!
+interface FastEthernet0/7
+ ip verify source
+!
+interface FastEthernet0/8
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security
+ storm-control broadcast level 40.00 20.00
+ ip verify source
+!
+interface FastEthernet0/9
+ ip verify source
+!
+interface FastEthernet0/10
+ ip verify source
+!
+interface FastEthernet0/11
+ ip verify source
+!
+interface FastEthernet0/12
+ ip verify source
+!
+interface FastEthernet0/13
+ ip verify source
+!
+interface FastEthernet0/14
+ ip verify source
+!
+interface FastEthernet0/15
+ ip verify source
+!
+interface FastEthernet0/16
+ ip verify source
+!
+interface FastEthernet0/17
+ ip verify source
+!
+interface FastEthernet0/18
+ ip verify source
+!
+interface FastEthernet0/19
+ ip verify source
+!
+interface FastEthernet0/20
+ ip verify source
+!
+interface FastEthernet0/21
+ ip verify source
+!
+interface FastEthernet0/22
+ ip verify source
+!
+interface FastEthernet0/23
+ ip verify source
+!
+interface FastEthernet0/24
+ description SW2-client
+ ip verify source
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address 192.168.7.1 255.255.255.0
+!
+ip http server
+ip http secure-server
+!
+!
+!
+ip source binding 0015.FA88.4EC1 vlan 1 192.168.7.2 interface Fa0/24
+!
+!
+!
+line con 0
+ speed 19200
+line vty 0 4
+ login local
+ transport input telnet ssh
+line vty 5 15
+ login
+!
+end
