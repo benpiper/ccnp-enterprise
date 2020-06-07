@@ -1,0 +1,10 @@
+Asher> show ip
+
+NAME        : Asher[1]
+IP/MASK     : 3.0.0.2/24
+GATEWAY     : 3.0.0.254
+DNS         :
+MAC         : 00:50:79:66:68:01
+LPORT       : 10005
+RHOST:PORT  : 192.168.56.1:10004
+MTU:        : 1500

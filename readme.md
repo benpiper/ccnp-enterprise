@@ -6,7 +6,16 @@
 
 [Implementing OSPF](implementing-ospf)
 
+[Implementing EIGRP](implementing-eigrp)
+
 [VLANs and Trunking](vlans-trunking)
+
+[Spanning Tree Protocols and EtherChannels](spanning-tree-protocols-etherchannels)
+
+[Infrastructure Security](infrastructure-security)
+
+[First Hop Redundancy Protocols](first-hop-redundancy-protocols)
+
 
 ## Objective Map
 
