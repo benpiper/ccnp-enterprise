@@ -1,0 +1,6 @@
+Xshell download: https://www.netsarang.com/download/free_license.html
+
+Telnet command: C:\Program Files (x86)\NetSarang\Xshell 5\xshell.exe
+Telnet arguments: -url telnet://%h:%p -newtab %t
+SSH command: C:\Program Files (x86)\NetSarang\Xshell 5\xshell.exe
+SSH arguments: -url ssh://%h:%p -newtab %t

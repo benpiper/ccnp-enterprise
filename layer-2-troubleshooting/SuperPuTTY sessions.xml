@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSessionData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SessionData SessionId="PC1" SessionName="PC1" ImageKey="computer" Host="172.16.1.11" Port="6001" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="PC2" SessionName="PC2" ImageKey="computer" Host="172.16.1.11" Port="6002" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="R1" SessionName="R1" ImageKey="computer" Host="172.16.1.11" Port="5001" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="R2" SessionName="R2" ImageKey="computer" Host="172.16.1.11" Port="5002" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="R3" SessionName="R3" ImageKey="computer" Host="172.16.1.11" Port="5003" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="R4" SessionName="R4" ImageKey="computer" Host="172.16.1.11" Port="5004" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="R5" SessionName="R5" ImageKey="computer" Host="172.16.1.11" Port="5005" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="SW1" SessionName="SW1" ImageKey="computer" Host="172.16.1.11" Port="4001" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="SW2" SessionName="SW2" ImageKey="computer" Host="172.16.1.11" Port="4002" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="SW3" SessionName="SW3" ImageKey="computer" Host="172.16.1.11" Port="4003" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="SW4" SessionName="SW4" ImageKey="computer" Host="172.16.1.11" Port="4004" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+  <SessionData SessionId="SW5" SessionName="SW5" ImageKey="computer" Host="172.16.1.11" Port="4005" Proto="Telnet" PuttySession="Default Settings" Username="" ExtraArgs="" />
+</ArrayOfSessionData>

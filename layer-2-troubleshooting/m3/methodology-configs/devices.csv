@@ -1,0 +1,8 @@
+R1,IOSv,GigabitEthernet0/2,GigabitEthernet0/3,
+Server1,server,eth1,
+R2,IOSv,GigabitEthernet0/2,GigabitEthernet0/3,
+SW4,IOSvL2,GigabitEthernet0/1,GigabitEthernet0/2,
+SW3,IOSvL2,GigabitEthernet0/1,GigabitEthernet0/2,GigabitEthernet1/1,
+SW1,IOSvL2,GigabitEthernet0/1,GigabitEthernet0/2,
+SW2,IOSvL2,GigabitEthernet0/2,GigabitEthernet1/1,GigabitEthernet1/2,
+Server2,server,eth1,
