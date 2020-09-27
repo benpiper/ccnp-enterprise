@@ -16,6 +16,7 @@
 
 [First Hop Redundancy Protocols](first-hop-redundancy-protocols)
 
+[Layer 2 Troubleshooting](layer-2-troubleshooting)]
 
 ## Objective Map
 
