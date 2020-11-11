@@ -1,0 +1,250 @@
+!
+! Last configuration change at 22:17:31 UTC Sun Aug 14 2016
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+key chain auth
+ key 1
+  key-string Pluralsight
+  cryptographic-algorithm hmac-sha-512
+!
+!
+username cisco privilege 15 secret 5 $1$XICm$hP4whM587hvX3h6la5IFs/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 8.8.8.8 255.255.255.255
+!
+interface Loopback180
+ ip address 1.80.0.8 255.248.0.0
+!
+interface Loopback192
+ ip address 1.92.0.8 255.248.0.0
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.2.12 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description GigabitEthernet0/1
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ description to R5
+ ip address 58.58.58.2 255.255.255.252
+ ip ospf authentication key-chain auth
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ description to R6
+ ip address 68.68.68.2 255.255.255.252
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ description to R7
+ ip address 78.78.78.2 255.255.255.252
+ ip access-group SECURE in
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/8
+ description GigabitEthernet0/8
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/9
+ description to R9
+ ip address 89.89.89.1 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf authentication-key mykey
+ ip ospf message-digest-key 1 md5 mykey
+ ip ospf network point-to-point
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/10
+ description GigabitEthernet0/10
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ area 89 default-cost 100000
+ area 89 range 7.7.7.7 255.255.255.255 not-advertise cost 99999
+ redistribute connected subnets route-map RM-CHINA
+ network 58.58.58.2 0.0.0.0 area 0
+ network 68.68.68.2 0.0.0.0 area 0
+ network 78.78.78.2 0.0.0.0 area 0
+ network 89.89.89.1 0.0.0.0 area 89
+ default-information originate always metric 1
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 1.1.1.1
+ip route 0.0.0.0 0.0.0.0 4.4.4.4 254
+ip ssh server algorithm authentication password
+!
+ip access-list extended SECURE
+ deny   ip any host 224.0.0.6
+ permit ip any any
+!
+!
+ip prefix-list PL-CHINA seq 5 permit 1.80.0.0/13
+!
+ip prefix-list nodefault seq 5 deny 0.0.0.0/0
+ip prefix-list nodefault seq 10 permit 0.0.0.0/0 ge 1
+!
+route-map RM-CHINA permit 10
+ match ip address prefix-list PL-CHINA
+ set tag 8
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end

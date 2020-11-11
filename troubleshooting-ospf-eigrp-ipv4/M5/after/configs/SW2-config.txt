@@ -1,0 +1,201 @@
+!
+! Last configuration change at 18:57:45 UTC Mon Aug 15 2016
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+no process cpu extended history
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 1457 
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ no ip address
+!
+interface GigabitEthernet0/1
+ description to SW1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/3
+ description GigabitEthernet0/3
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/0
+ description OOB management
+ no switchport
+ vrf forwarding Mgmt-intf
+ ip address 10.255.2.45 255.255.0.0
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/0
+ description to SW4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/1
+ description to R1
+ switchport access vlan 1457
+ switchport trunk allowed vlan 1-1456,1458-4094
+ switchport trunk encapsulation dot1q
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/2
+ description to SW5
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/1
+ description to SW1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface Vlan100
+ ip address 172.16.100.2 255.255.255.0
+!
+interface Vlan200
+ ip address 172.16.200.2 255.255.255.0
+!
+interface Vlan300
+ ip address 172.3.0.2 255.255.255.0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login
+ transport input telnet ssh
+!
+!
+end
