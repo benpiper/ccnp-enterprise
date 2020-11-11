@@ -18,6 +18,8 @@
 
 [Layer 2 Troubleshooting](layer-2-troubleshooting)
 
+[Troubleshooting OSPF and EIGRP for IPv4](troubleshooting-ospf-eigrp-ipv4)
+
 ## Objective Map
 
 | Course | ENCOR | ENARSI |
