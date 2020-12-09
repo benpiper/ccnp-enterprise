@@ -7,9 +7,9 @@ The easiest way to set up your troubleshooting lab is to use Cisco VIRL or [Cisc
 
 [L3 topology diagram](l3-topology.png)
 
-## [Starting configuration files](m2)
+## [Starting configuration files](M2)
 ### GNS3
-- [Individual device configurations](m2/configs)
-- [Interface mappings](m2/configs/connections.csv)
+- [Individual device configurations](M2/configs)
+- [Interface mappings](M2/configs/connections.csv)
 ### VIRL
-- [VIRL topology file](m2/ipv6-routing-protocols-ccnp-300-135-tshoot.virl)
+- [VIRL topology file](M2/ipv6-routing-protocols-ccnp-300-135-tshoot.virl)

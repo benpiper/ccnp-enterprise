@@ -1,0 +1,295 @@
+!
+! Last configuration change at 23:58:10 UTC Thu Sep 29 2016
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username cisco privilege 15 secret 5 $1$I8ID$g1g1DrtH1Ym0t9l.Q3ipi/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ no ip address
+ ipv6 address FE80::1 link-local
+ ipv6 address 2002::1/128
+!
+interface Loopback1
+ no ip address
+ ipv6 address 3000::14/128
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.4.219 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/1
+ description to SW2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:1457::1/64
+ ipv6 ospf authentication ipsec spi 1457 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 15
+ no cdp enable
+!
+interface GigabitEthernet0/2
+ description to R2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:12::1/64
+ no cdp enable
+!
+interface GigabitEthernet0/3
+ description to R3
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:13::1/64
+ ipv6 eigrp 10
+ no cdp enable
+!
+interface GigabitEthernet0/4
+ description GigabitEthernet0/4
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/6
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/7
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/8
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/9
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/10
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/11
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+interface GigabitEthernet0/12
+ description GigabitEthernet0/12
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ no cdp enable
+!
+!
+router eigrp 10
+!
+!
+router eigrp PS
+ !
+ address-family ipv6 unicast autonomous-system 10
+  !
+  af-interface GigabitEthernet0/1
+   shutdown
+  exit-af-interface
+  !
+  af-interface GigabitEthernet0/2
+   authentication mode hmac-sha-256 Pluralsight
+  exit-af-interface
+  !
+  topology base
+   distribute-list prefix-list INFILTER in 
+   redistribute ospf 1 metric 10 10 255 1 1500
+  exit-af-topology
+  eigrp router-id 1.1.1.1
+ exit-address-family
+!
+router ospfv3 1
+ router-id 1.1.1.1
+ area 15 nssa
+ area 15 authentication ipsec spi 1015 sha1 332C0C249DFB05B93DD2766520F8215EF48FA9EA
+ !
+ address-family ipv4 unicast
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  summary-prefix 2001::/16 nssa-only tag 1
+  redistribute connected
+  redistribute eigrp 10
+  adjacency stagger 1 2
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh server algorithm authentication password
+!
+ipv6 router ospf 2
+!
+!
+!
+ipv6 prefix-list INFILTER seq 3 permit 2002::3/128
+ipv6 prefix-list INFILTER seq 4 permit 2002::4/128
+ipv6 prefix-list INFILTER seq 5 deny 2002::/16 ge 128
+ipv6 prefix-list INFILTER seq 10 permit ::/0 le 128
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end

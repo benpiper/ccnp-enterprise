@@ -1,0 +1,223 @@
+!
+! Last configuration change at 20:46:08 UTC Mon Sep 26 2016
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username cisco privilege 15 secret 5 $1$Boyb$b8lxxEgGW8L/LVe.Dzc9U/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ no ip address
+ ipv6 address FE80::5 link-local
+ ipv6 address 2002::5/128
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.4.161 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description to SW1
+ mac-address fa16.3e55.5555
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::5 link-local
+ ipv6 address 2001:1457::5/64
+ ipv6 ospf authentication ipsec spi 1457 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 15
+ ipv6 ospf priority 2
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ description to R6
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::5 link-local
+ ipv6 address 2001:56::5/64
+ ipv6 ospf authentication ipsec spi 256 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/7
+ description to R7
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::5 link-local
+ ipv6 address 2001:57::5/64
+ ipv6 ospf authentication ipsec spi 257 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/8
+ description to R8
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::5 link-local
+ ipv6 address 2001:58::5/64
+ ipv6 ospf authentication ipsec spi 258 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 0
+!
+router ospfv3 1
+ router-id 5.5.5.5
+ area 15 nssa default-information-originate
+ area 15 authentication ipsec spi 1015 sha1 332C0C249DFB05B93DD2766520F8215EF48FA9EA
+ !
+ address-family ipv6 unicast
+  redistribute connected
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh server algorithm authentication password
+!
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end

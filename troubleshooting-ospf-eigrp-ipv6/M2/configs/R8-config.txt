@@ -1,0 +1,268 @@
+!
+! Last configuration change at 19:09:00 UTC Mon Sep 26 2016
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username cisco privilege 15 secret 5 $1$ofZK$IYecdyYJk05GTS0Y4VCMH.
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ no ip address
+ ipv6 address FE80::8 link-local
+ ipv6 address 2002::8/128
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.4.149 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description GigabitEthernet0/1
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ description to R5
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::8 link-local
+ ipv6 address 2001:58::8/64
+ ipv6 ospf 1 area 0
+ ipv6 ospf network non-broadcast
+ ospfv3 authentication ipsec spi 258 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ospfv3 network broadcast
+!
+interface GigabitEthernet0/6
+ description to R6
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::8 link-local
+ ipv6 address 2001:68::8/64
+ ipv6 ospf authentication ipsec spi 268 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/7
+ description to R7
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::8 link-local
+ ipv6 address 2001:78::8/64
+ ipv6 ospf authentication ipsec spi 278 sha1 6C3AD0F1D6B794C29C65A31395220BDF4C0E4C2D
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/8
+ description GigabitEthernet0/8
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/9
+ description to R9
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address FE80::8 link-local
+ ipv6 address 2001:89::8/64
+!
+interface GigabitEthernet0/10
+ description GigabitEthernet0/10
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+router ospfv3 1
+ !
+ address-family ipv4 unicast
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  redistribute connected
+  redistribute bgp 65000
+ exit-address-family
+!
+router ospf 1
+!
+router bgp 65000
+ bgp router-id 8.8.8.8
+ bgp log-neighbor-changes
+ neighbor 2001:89::9 remote-as 65000
+ neighbor 2002::4 remote-as 50000
+ neighbor 2002::4 ebgp-multihop 255
+ neighbor 2002::4 update-source Loopback0
+ !
+ address-family ipv4
+  no neighbor 2001:89::9 activate
+  no neighbor 2002::4 activate
+ exit-address-family
+ !
+ address-family ipv6
+  redistribute ospf 1 match internal external 1 external 2 nssa-external 1 nssa-external 2 route-map R8-BGP include-connected
+  bgp redistribute-internal
+  network 2002::8/128
+  neighbor 2001:89::9 activate
+  neighbor 2002::4 activate
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh server algorithm authentication password
+!
+!
+!
+ipv6 prefix-list EVILNUMBERS seq 5 permit 2001:13::/64
+!
+ipv6 prefix-list EVLINUMBERS seq 5 permit 2001::/24
+route-map R8-BGP deny 10
+ match ipv6 address prefix-list EVILNUMBERS
+!
+route-map R8-BGP permit 20
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end
