@@ -1,0 +1,146 @@
+Version 7.8
+Diagram_Title ""
+Notes1 
+Notes2 
+Page_Settings_Table Width Height Orientation Pos_X Pos_Y Draw_Scale Fine_Scale Created_By Create_Date Updated_By Update_Date Adjust_X Adjust_Y Page_Locked
+ page_settings 6605 2300 landscape 65 82 0.25 4 Auto Auto ben 1/27/2017 0 0 Unlocked
+Colours_Table Bkgnd Link_Text Grid Float_Foregnd Float_Backgnd
+ colours &hFFFFFF& &h0& &hFEEDED& &h0& &hC0FFFF&
+Text_Styles_Table Font Size Bold Italic UL ST FColour BColour F_Transpcy B_Transpcy
+ text_style "Big labels" "Microsoft Sans Serif" 18 False False False False &h0& &hFFFFFF& 255 0 
+ text_style "Medium labels" "Microsoft Sans Serif" 16 False False False False &h0& &hFFFFFF& 255 0 
+Backdrop 
+Obj_Table Index Type X Y Caption_Lbl Float_text Hyperlink Parent Addr_Lbl X_scale Y_scale Layer Type_bits Rotate Rflip Backgnd Width Height Locked Toolset Var1 Var2
+ object 1 "multilayer switch" 3121 429 1 ! ! ! 2 4 4 1 0 0 0 false 275 267 false 0 ! !
+ object 2 "multilayer switch" 4473 429 3 ! ! ! 4 4 4 1 0 0 0 false 275 267 false 0 ! !
+ object 3 "multilayer switch" 3121 1517 5 ! ! ! 6 4 4 1 0 0 0 false 275 267 false 0 ! !
+ object 4 "multilayer switch" 4473 1517 7 ! ! ! 8 4 4 1 0 0 0 false 275 267 false 0 ! !
+ object 5 "multilayer switch" 3829 989 9 ! ! ! 10 4 4 1 0 0 0 false 275 267 false 0 ! !
+ no_object 6
+ object 7 server2 428 1986 25 ! ! ! 54 4 4 1 0 0 0 false 124 256 false 0 ! !
+ object 8 routerc1 2279 423 28 ! ! ! 29 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 9 routerc1 1323 423 30 ! ! ! 31 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 10 routerc1 2273 1529 32 ! ! ! 33 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 11 routerc1 1339 1529 34 ! ! ! 35 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 12 routerc1 435 1529 36 ! ! ! 37 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 13 routerc1 5075 969 38 ! ! ! 39 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 14 routerc1 5569 425 40 ! ! ! 41 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 15 routerc1 6099 969 42 ! ! ! 43 4 4 1 0 0 0 false 399 243 false 0 ! !
+ object 16 routerc1 5567 1501 44 ! ! ! 45 4 4 1 0 0 0 false 399 243 false 0 ! !
+Label_Table Index X Y Text Font_Name Size Bold Italic UL ST Colour Parent Type Backgnd Locked Rotate Ftranspcy Btranspcy Layer Style Xoffset Yoffset
+ label 1 -15 116 SW1 "microsoft sans serif" 72 false false false false &h0& 1 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 2 n 0 ! ! ! ! ! false ! &h0& 1 ip ! ! 0 255 0 ! !
+ label 3 -15 116 SW2 "microsoft sans serif" 72 false false false false &h0& 2 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 4 n 0 ! ! ! ! ! false ! &h0& 2 ip ! ! 0 255 0 ! !
+ label 5 s 0 SW3 "microsoft sans serif" 72 false false false false &h0& 3 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 6 n 0 ! ! ! ! ! false ! &h0& 3 ip ! ! 0 255 0 ! !
+ label 7 s 0 SW4 "microsoft sans serif" 72 false false false false &h0& 4 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 8 n 0 ! ! ! ! ! false ! &h0& 4 ip ! ! 0 255 0 ! !
+ label 9 s 0 SW5 "microsoft sans serif" 72 false false false false &h0& 5 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 10 n 0 ! ! ! ! ! false ! &h0& 5 ip ! ! 0 255 0 ! !
+ label 11 3217 733 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 38 255 0 ! "Medium labels"
+ label 12 3255 1131 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 324 255 0 ! "Medium labels"
+ label 13 5693 1039 gi0/4 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 14 5747 1325 gi0/3 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 15 3663 289 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 16 5153 1525 gi0/4 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 17 2274 1528 ! "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 18 3667 1529 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 19 4969 737 gi0/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 20 2463 1533 gi0/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 21 2035 1279 gi0/5 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 22 5004 1426 ! "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 23 439 1638.5 gi0/14 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 24 741.5 2268.5 ! ! ! ! ! false ! &h0& ! ip ! ! 0 255 0 ! !
+ label 25 s 0 WebServer ! ! ! ! false ! &h0& 7 object ! ! 0 255 0 ! !
+ label 26 1853 1539 gi0/8 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 27 1525 1539 gi0/7 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 28 -120 120 R5 "microsoft sans serif" 72 false false false false &h0& 8 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 29 n 0 ! ! ! ! ! false ! &h0& 8 ip ! ! 0 255 0 ! !
+ label 30 -120 116 R6 "microsoft sans serif" 72 false false false false &h0& 9 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 31 n 0 ! ! ! ! ! false ! &h0& 9 ip ! ! 0 255 0 ! !
+ label 32 s 0 R7 "microsoft sans serif" 72 false false false false &h0& 10 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 33 n 0 ! ! ! ! ! false ! &h0& 10 ip ! ! 0 255 0 ! !
+ label 34 s 0 R8 "microsoft sans serif" 72 false false false false &h0& 11 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 35 n 0 ! ! ! ! ! false ! &h0& 11 ip ! ! 0 255 0 ! !
+ label 36 -120 128 R9 "microsoft sans serif" 72 false false false false &h0& 12 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 37 n 0 ! ! ! ! ! false ! &h0& 12 ip ! ! 0 255 0 ! !
+ label 38 s 0 R2 "microsoft sans serif" 72 false false false false &h0& 13 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 39 n 0 ! ! ! ! ! false ! &h0& 13 ip ! ! 0 255 0 ! !
+ label 40 -120 116 R1 "microsoft sans serif" 72 false false false false &h0& 14 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 41 n 0 ! ! ! ! ! false ! &h0& 14 ip ! ! 0 255 0 ! !
+ label 42 s 0 R3 "microsoft sans serif" 72 false false false false &h0& 15 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 43 n 0 ! ! ! ! ! false ! &h0& 15 ip ! ! 0 255 0 ! !
+ label 44 s 0 R4 "microsoft sans serif" 72 false false false false &h0& 16 object &hFFFFFF& ! 0 255 0 ! "Big labels"
+ label 45 n 0 ! ! ! ! ! false ! &h0& 16 ip ! ! 0 255 0 ! !
+ label 46 5196 968 ! "microsoft sans serif" 72 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 47 5084 968 ! "microsoft sans serif" 72 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 48 5092 968 ! "microsoft sans serif" 72 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 49 5228 968 ! "microsoft sans serif" 72 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 50 4647 309 "VLAN 488" "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 51 2489 305 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 52 2481 1405 802.1Q "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 53 4751 1393 "VLAN 897" "microsoft sans serif" 64 false false false false &hFF& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 54 n 0 ! ! ! ! ! false ! &h0& 7 ip ! ! 0 255 0 ! !
+ label 55 1109 1303 gi0/6 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 56 923 1539 gi0/9 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 57 631 1413 gi0/8 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 58 1101 535 gi0/8 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 59 1529 307 gi0/5 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 60 1861 305 gi0/6 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 61 2285 589 gi0/7 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 62 572.5 2193.5 ! ! ! ! ! false ! &h0& ! object ! ! 0 255 0 ! "Medium labels"
+ label 63 2475 437 gi0/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 64 4611 1525 gi1/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 65 2777 1529 gi3/0 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 66 5189 503 gi0/2 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 67 5149 313 gi0/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 68 4611 441 gi1/1 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 69 4692 1582 ! "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! !
+ label 70 2771 429 gi2/0 "microsoft sans serif" 64 false false false false &h0& ! object &hFFFFFF& ! 0 255 0 ! "Medium labels"
+ label 71 466.5 2162.5 ! ! ! ! ! false ! &h0& ! object ! ! 0 255 0 ! !
+ label 72 337.5 2224.5 ! ! ! ! ! false ! &h0& ! object ! ! 0 255 0 ! !
+Link_table Index Obj1 Obj2 Style Hostname1_Lbl Hostname2_Lbl Addr1_Lbl Addr2_Lbl Comment1 Comment2 Xoffset1 Yoffset1 Xoffset2 Yoffset2 Node_List Align Layer
+ link_object 1 12 7 1000BaseT ! ! ! ! ! ! -5 -28 -1 -13 ! False 3
+ link_object 2 1 5 1000BaseT ! ! ! ! ! ! 24 92 -100 -12 ! False 3
+ link_object 3 1 5 1000BaseT ! ! ! ! ! ! 84 52 -56 -68 ! False 3
+ link_object 4 5 3 1000BaseT ! ! ! ! ! ! -56 92 72 -8 ! False 3
+ link_object 5 5 3 1000BaseT ! ! ! ! ! ! -108 52 32 -64 ! False 3
+ link_object 6 1 2 1000BaseT ! ! ! ! ! ! 68 -32 -92 -28 ! False 3
+ link_object 7 1 2 1000BaseT ! ! ! ! ! ! 72 36 -92 36 ! False 3
+ link_object 8 3 4 1000BaseT ! ! ! ! ! ! -12 8 -20 8 ! False 3
+ no_link_object 9
+ no_link_object 10
+ no_link_object 11
+ no_link_object 12
+ link_object 13 2 14 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 14 14 13 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ no_link_object 15
+ link_object 16 15 16 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ no_link_object 17
+ link_object 18 1 8 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 19 3 10 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 20 8 10 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ no_link_object 21
+ link_object 22 8 9 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 23 9 11 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 24 11 10 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 25 12 11 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+ link_object 26 4 16 1000BaseT ! ! ! ! ! ! 0 0 0 0 ! False 3
+Link_Styles_table Type Format Colour Style Width Misc Angle Style2 Length Endcap Join Startcap Dashcap Transpcy Align Secondary_Style start_cap_type variant width height x y end_cap_type variant width height x y
+ define_link 100baseT 0 &h808080& 1 1 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link 1000BaseT 0 &h9797FF& 1 1 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "MM Fibre" 0 &hFF8080& 1 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "SM Fibre" 0 &h80FF00& 1 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link 10baseT 0 &h808080& 1 1 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "Leased Line" 1 &hFF00& 1 14 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link ISDN 0 &hFF& 3 2 9 1 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link ADSL 1 &hFFFF00& 1 14 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link backbone 0 &hC0C0C0& 1 6 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "black pointer" 3 &h0& 1 1 9 0.3 1 13 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "red pointer" 3 &hFF& 1 1 9 0 1 15 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link unknown 0 &h7F7F7F& 1 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link "GRE Tunnel" 0 &hFF& 2 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link L2TP 0 &h80FF& 2 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+ define_link box 0 &h7C7C7C& 1 2 9 0 0 0 0 0 0 0 255 False ! 0 0 0 0 0 0 0 0 0 0 0 0
+Shapes_table Name Type Variant Colour1 Transpcy1 Colour2 Transpcy2 Colour3 Transpcy3 Dim1 Dim2 FillX1 FillY1 FillX2 FillY2 Width Height Borderstyle Dashcap Antialias

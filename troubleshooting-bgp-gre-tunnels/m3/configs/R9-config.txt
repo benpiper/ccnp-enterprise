@@ -1,0 +1,305 @@
+!
+! Last configuration change at 04:21:13 UTC Thu Feb 9 2017
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R9
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username cisco privilege 15 secret 5 $1$Jh30$qPECOlO5aEFsnz6S54gtS/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+ authentication pre-share
+crypto isakmp key Pluralsight address 198.51.100.1   
+crypto isakmp key Pluralsight address 203.0.113.4    
+crypto isakmp key Pluralsight address 192.0.1.1      
+!
+!
+crypto ipsec transform-set esp-3des esp-3des esp-sha-hmac 
+ mode transport
+!
+!
+!
+crypto map r1r9 local-address GigabitEthernet0/14
+crypto map r1r9 10 ipsec-isakmp 
+ ! Incomplete
+ set peer 198.51.100.1
+ ! access-list has not been configured yet
+ set transform-set esp-3des 
+ match address 119
+!
+crypto map r4r9 local-address GigabitEthernet0/14
+crypto map r4r9 10 ipsec-isakmp 
+ ! Incomplete
+ set peer 203.0.113.4
+ ! access-list has not been configured yet
+ set transform-set esp-3des 
+ match address 111
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 9.9.9.9 255.255.255.255
+ ipv6 address 2001::9/128
+ ipv6 ospf 1 area 0
+!
+interface Loopback1
+ ip address 9.0.0.1 255.255.255.255
+!
+interface Tunnel19
+ no ip address
+ ipv6 address FE80::9 link-local
+ ipv6 address 2001:19::9/32
+ ipv6 ospf 1 area 1
+ tunnel destination 1.1.1.1
+!
+interface Tunnel49
+ ip address 172.16.49.9 255.255.255.0
+ ipv6 address FE80::9 link-local
+ ipv6 address 2001:49::9/32
+ ipv6 ospf 1 area 1
+ tunnel source 9.9.9.9
+ tunnel mode ipip
+ tunnel destination 4.4.4.4
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.2.42 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/8
+ description to R8 (AS 3356)
+ ip address 192.0.2.9 255.255.255.0
+ ip ospf authentication message-digest
+ ip ospf authentication-key mykey
+ ip ospf message-digest-key 1 md5 mykey
+ ip ospf network point-to-point
+ duplex full
+ speed auto
+ media-type rj45
+ crypto map r1r9
+!
+interface GigabitEthernet0/9
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/10
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/11
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/12
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/13
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/14
+ description to WebServer
+ ip address 192.0.1.1 255.255.255.0
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address 2001:6509::1/32
+ ipv6 ospf 1 area 1
+!
+router ospf 1
+ network 172.16.49.9 0.0.0.0 area 1
+!
+router bgp 16509
+ bgp log-neighbor-changes
+ network 9.0.0.1 mask 255.255.255.255
+ network 9.9.9.9 mask 255.255.255.255
+ network 192.0.1.0
+ network 192.0.2.0
+ neighbor 192.0.2.8 remote-as 3356
+ neighbor 192.0.2.8 password bgpr0x!
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh server algorithm authentication password
+!
+ipv6 router ospf 1
+ router-id 9.9.9.9
+ redistribute connected
+!
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner motd `
+WELCOME TO R9!`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end
