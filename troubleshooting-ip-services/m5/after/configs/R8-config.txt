@@ -1,0 +1,265 @@
+!
+! Last configuration change at 17:18:31 UTC Fri Mar 31 2017
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+key chain auth
+ key 1
+  key-string Pluralsight
+  cryptographic-algorithm hmac-sha-512
+!
+!
+username cisco privilege 15 secret 5 $1$XICm$hP4whM587hvX3h6la5IFs/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 8.8.8.8 255.255.255.255
+!
+interface Loopback1
+ ip address 8.0.0.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.4.58 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description GigabitEthernet0/1
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ description to R6
+ ip address 198.51.100.108 255.255.255.248
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ description to R7
+ ip address 198.51.100.18 255.255.255.252
+ ip verify unicast source reachable-via rx
+ no ip route-cache
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/8
+ description GigabitEthernet0/8
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/9
+ description to R9
+ ip address 192.0.2.8 255.255.255.0
+ ip access-group 100 in
+ ip policy route-map RM_PBR
+ ip ospf authentication message-digest
+ ip ospf authentication-key mykey
+ ip ospf message-digest-key 1 md5 mykey
+ ip ospf network point-to-point
+ duplex full
+ speed auto
+ media-type rj45
+ ipv6 address 2001:6509::8/32
+!
+interface GigabitEthernet0/10
+ description GigabitEthernet0/10
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+router bgp 5678
+ bgp log-neighbor-changes
+ network 192.0.2.0
+ network 198.51.100.16 mask 255.255.255.252
+ network 198.51.100.104 mask 255.255.255.248
+ neighbor 192.0.2.9 remote-as 9
+ neighbor 192.0.2.9 password logos
+ neighbor 192.0.2.9 default-originate
+ neighbor 192.0.2.9 soft-reconfiguration inbound
+ neighbor 192.0.2.9 distribute-list 109 out
+ neighbor 198.51.100.17 remote-as 5678
+ neighbor 198.51.100.17 password k0inon1a
+ neighbor 198.51.100.106 remote-as 5678
+ neighbor 198.51.100.106 password k0inon1a
+!
+ip forward-protocol nd
+!
+ip as-path access-list 1 deny ^2711
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 1.1.1.1
+ip route 0.0.0.0 0.0.0.0 4.4.4.4 254
+ip route 192.168.100.0 255.255.255.0 198.51.100.17
+ip ssh server algorithm authentication password
+!
+ip access-list extended AS9
+ permit ip host 192.0.2.9 any
+!
+!
+ip prefix-list PL->R7 seq 5 deny 192.0.0.0/22
+ip prefix-list PL->R7 seq 10 permit 0.0.0.0/0 ge 1
+!
+ip prefix-list PL-CHINA seq 5 permit 1.80.0.0/13
+!
+ip prefix-list nodefault seq 5 deny 0.0.0.0/0
+ip prefix-list nodefault seq 10 permit 0.0.0.0/0 ge 1
+!
+route-map RM_PBR permit 10
+ match ip address AS9
+ set ip next-hop 198.51.100.106
+!
+!
+access-list 100 deny   icmp any any administratively-prohibited
+access-list 100 permit ip any any
+access-list 109 deny   ip host 198.51.100.16 host 255.255.255.252
+access-list 109 deny   ip host 192.168.100.0 host 255.255.255.0
+access-list 109 permit ip any any
+access-list 110 permit ip any host 192.0.2.100
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end

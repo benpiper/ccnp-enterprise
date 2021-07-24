@@ -1,0 +1,255 @@
+!
+! Last configuration change at 19:39:28 UTC Sun Mar 19 2017
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+mpls ldp neighbor 57.0.0.7 targeted ldp
+!
+!
+!
+key chain ospfauth
+ key 1
+  key-string Pluralsight
+  cryptographic-algorithm hmac-sha-512
+key chain KC_OSPF
+ key 1
+  key-string icedtea
+  cryptographic-algorithm md5
+!
+!
+username cisco privilege 15 secret 5 $1$FvSR$fdXS7EN2336Xzmoacsbyv/
+!
+redundancy
+!
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 5.5.5.5 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.3.138 255.255.0.0
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 10.135.7.5 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+ ip ospf authentication key-chain KC_OSPF
+ ip ospf priority 25
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ no ip address
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ description to R6
+ ip address 198.51.100.5 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ duplex full
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/8
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ router-id 5.5.5.5
+ area 0 authentication message-digest
+ redistribute bgp 5678 subnets route-map RM_BGP->OSPF
+ network 10.135.7.5 0.0.0.0 area 0
+!
+router bgp 5678
+ bgp log-neighbor-changes
+ bgp redistribute-internal
+ network 198.51.100.4 mask 255.255.255.252
+ redistribute ospf 1 route-map RM_OSPF->BGP
+ neighbor 198.51.100.6 remote-as 5678
+ neighbor 198.51.100.6 password raz
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list 110 interface GigabitEthernet0/6 overload
+ip route 3.3.3.3 255.255.255.255 56.0.0.6
+ip ssh server algorithm authentication password
+!
+!
+ip prefix-list PL_BGP->OSPF seq 5 permit 198.51.100.4/30
+ip prefix-list PL_BGP->OSPF seq 10 permit 198.51.100.104/29
+ip prefix-list PL_BGP->OSPF seq 15 permit 198.51.100.192/27
+ip prefix-list PL_BGP->OSPF seq 20 permit 198.51.100.16/30
+ip prefix-list PL_BGP->OSPF seq 25 permit 192.0.2.0/24
+ip prefix-list PL_BGP->OSPF seq 30 permit 10.9.9.0/24
+!
+ip prefix-list PL_OSPF->BGP seq 5 permit 10.135.7.0/24
+ip prefix-list PL_OSPF->BGP seq 10 permit 192.168.100.0/24
+ip prefix-list PL_OSPF->BGP seq 15 permit 192.168.200.0/24
+ip prefix-list PL_OSPF->BGP seq 25 permit 172.16.12.0/30
+ip prefix-list PL_OSPF->BGP seq 30 permit 172.16.24.0/29
+ip prefix-list PL_OSPF->BGP seq 35 permit 10.44.44.0/24
+ip prefix-list PL_OSPF->BGP seq 40 permit 172.16.13.0/29
+!
+route-map RM_BGP->OSPF permit 10
+ match ip address prefix-list PL_BGP->OSPF
+ set metric-type type-1
+!
+route-map RM_OSPF->BGP permit 10
+ match ip address prefix-list PL_OSPF->BGP
+ set metric +10
+ set origin igp
+!
+route-map RM-INTERNAL permit 10
+!
+route-map RM-CONN deny 5
+!
+route-map RM-CONN permit 10
+!
+!
+access-list 110 permit ip any 192.168.100.0 0.0.0.255
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login local
+ transport input telnet ssh
+!
+no scheduler allocate
+!
+end

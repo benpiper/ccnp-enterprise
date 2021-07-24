@@ -1,0 +1,273 @@
+!
+! Last configuration change at 19:30:59 UTC Thu Mar 16 2017
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+no process cpu extended history
+!
+!
+!
+!
+!
+vtp mode transparent
+!
+ip dhcp excluded-address 172.16.200.1 172.16.200.254
+!
+!
+no ip domain-lookup
+no ip cef
+no ipv6 cef
+!
+key chain KC_HSRP
+ key 1
+  key-string tshoot
+key chain KC_OSPF
+ key 1
+  key-string icedtea
+   cryptographic-algorithm md5
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 488 priority 24576
+!
+vlan internal allocation policy ascending
+!
+vlan 100,200 
+!
+vlan 897
+ name AS-29897
+!
+vlan 1356 
+!
+vlan 1357
+ name onethreefiveseven
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 11.11.11.11 255.255.255.255
+!
+interface GigabitEthernet0/1
+ description to SW2
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ switchport access vlan 2
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ description GigabitEthernet0/3
+ switchport access vlan 2
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/0
+ description OOB management
+ no switchport
+ ip address 10.255.3.107 255.255.0.0
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/0
+ description to SW3
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ switchport trunk encapsulation dot1q
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ description to R5
+ switchport access vlan 1357
+ switchport trunk allowed vlan none
+ switchport trunk encapsulation dot1q
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/1
+ description to SW2
+ switchport trunk allowed vlan 488
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/3
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ description to SW5
+ switchport trunk encapsulation dot1q
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ description to SW3
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface Vlan10
+ no ip address
+ shutdown
+!
+interface Vlan100
+ ip address 192.168.100.1 255.255.255.0
+ standby version 2
+ standby 100 ip 192.168.100.254
+ standby 100 preempt
+ standby 100 authentication md5 key-chain KC_HSRP
+ ip ospf authentication key-chain KC_OSPF
+!
+interface Vlan200
+ ip address 172.16.200.1 255.255.255.0
+!
+interface Vlan300
+ ip address 172.30.0.1 255.255.255.0
+!
+interface Vlan1357
+ ip address 10.135.7.1 255.255.255.0
+ ip ospf authentication key-chain KC_OSPF
+ ip ospf priority 75
+!
+router ospf 1
+ area 0 authentication message-digest
+ network 10.135.7.1 0.0.0.0 area 0
+ network 192.168.100.1 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login
+ transport input telnet ssh
+!
+!
+end

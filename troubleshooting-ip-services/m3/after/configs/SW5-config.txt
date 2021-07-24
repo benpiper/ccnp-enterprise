@@ -1,0 +1,234 @@
+!
+! Last configuration change at 13:19:16 UTC Tue Mar 28 2017
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+!
+!
+!
+!
+!
+vtp mode transparent
+!
+no ip dhcp conflict logging
+ip dhcp excluded-address 192.168.100.1 192.168.100.99
+ip dhcp excluded-address 192.168.100.250 192.168.100.254
+ip dhcp excluded-address 192.168.200.1 192.168.200.99
+ip dhcp excluded-address 192.168.200.250 192.168.200.254
+!
+ip dhcp pool VLAN100
+ network 192.168.100.0 255.255.255.0
+ default-router 192.168.100.254 
+ domain-name benpiper.com
+ dns-server 10.9.9.100 
+ lease 30
+!
+ip dhcp pool VLAN200
+ network 192.168.200.0 255.255.255.0
+ domain-name benpiper.com
+ default-router 192.168.200.254 
+ lease 30
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+key chain KC_OSPF
+ key 1
+  key-string icedtea
+   cryptographic-algorithm md5
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 100,200 
+!
+vlan 488
+ name AS-53488
+!
+vlan 897
+ name AS-29897
+!
+vlan 1357 
+no cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 55.55.55.55 255.255.255.255
+!
+interface GigabitEthernet0/1
+ description GigabitEthernet0/1
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/0
+ description OOB management
+ no switchport
+ vrf forwarding Mgmt-intf
+ ip address 10.255.4.45 255.255.0.0
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ description to SW3
+ switchport trunk allowed vlan 1-198,202-4094
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/3
+ description to SW3
+ switchport trunk allowed vlan 1-198,200,202-4094
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface Vlan100
+ ip address 192.168.100.5 255.255.255.0
+ ip ospf authentication key-chain KC_OSPF
+!
+interface Vlan200
+ ip address 192.168.200.5 255.255.255.0
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 peanut
+!
+router ospf 1
+ network 192.168.100.5 0.0.0.0 area 0
+ network 192.168.200.5 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login
+ transport input telnet ssh
+!
+!
+end

@@ -1,0 +1,281 @@
+!
+! Last configuration change at 01:42:52 UTC Mon Mar 20 2017
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+!
+no aaa new-model
+no process cpu extended history
+!
+!
+!
+!
+!
+vtp mode transparent
+!
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+key chain KC_HSRP
+ key 1
+  key-string tshoot
+key chain KC_OSPF
+ key 1
+  key-string icedtea
+   cryptographic-algorithm md5
+!
+!
+!
+spanning-tree mode rapid-pvst
+no spanning-tree etherchannel guard misconfig
+spanning-tree extend system-id
+spanning-tree vlan 100,897 priority 28672
+!
+vlan internal allocation policy ascending
+!
+vlan 100,200 
+!
+vlan 488
+ name AS-53488
+!
+vlan 897
+ name AS-29897
+!
+vlan 1357,1457 
+no cdp run
+!
+track 7 ip sla 7
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 33.33.33.33 255.255.255.255
+!
+interface GigabitEthernet0/1
+ description GigabitEthernet0/1
+ switchport access vlan 2
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/2
+ description GigabitEthernet0/2
+ switchport access vlan 2
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/0
+ description OOB management
+ no switchport
+ vrf forwarding Mgmt-intf
+ ip address 10.255.3.199 255.255.0.0
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/0
+ description to SW1
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ shutdown
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/1
+ description GigabitEthernet1/1
+ switchport access vlan 2
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/2
+ description to SW4
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet1/3
+ description to SW5
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/0
+ description to PC1
+ switchport access vlan 100
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/1
+ description GigabitEthernet2/1
+ switchport access vlan 2
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet2/3
+ description to SW5
+ switchport access vlan 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet3/0
+ description to R7
+ switchport access vlan 1357
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface Vlan100
+ ip address 192.168.100.3 255.255.255.0
+ ip helper-address 10.135.7.7 
+ standby version 2
+ standby 0 authentication md5 key-chain KC_HSRP
+ standby 100 ip 192.168.100.254
+ standby 100 priority 255
+ standby 100 authentication md5 key-chain KC_HSRP
+ standby 100 track 7 decrement 156
+ ip ospf authentication key-chain KC_OSPF
+!
+interface Vlan1357
+ ip address 10.135.7.3 255.255.255.0
+ ip ospf authentication key-chain KC_OSPF
+ ip ospf priority 100
+!
+router ospf 1
+ area 0 authentication message-digest
+ network 10.135.7.3 0.0.0.0 area 0
+ network 192.168.100.3 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip route 192.168.200.0 255.255.255.0 Null0
+!
+!
+ip sla 7
+ icmp-echo 10.135.7.7 source-interface Loopback0
+ frequency 5
+ip sla schedule 7 life forever start-time now
+!
+!
+!
+control-plane
+!
+banner exec `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner incoming `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+banner login `
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************`
+!
+line con 0
+ password cisco
+line aux 0
+line vty 0 4
+ exec-timeout 720 0
+ password cisco
+ login
+ transport input telnet ssh
+!
+!
+end
