@@ -1,0 +1,119 @@
+! https://www.cisco.com/c/en/us/solutions/collateral/enterprise-networks/software-defined-access/guide-c07-741859.html#_Toc2934407
+!
+service timestamps debug datetime msec
+!
+service timestamps log datetime msec
+!
+service password-encryption
+!
+service sequence-numbers
+!
+! Setup NTP Server
+! Setup Timezone & Daylight Savings
+ 
+ ntp server ${ntpServerIp}
+!
+</#if>
+ ntp update-calendar
+!
+! Enable external SSHv2 access
+!
+crypto key generate rsa label dnac-sda modulus 1024
+ip ssh version 2
+!
+ip scp server enable
+!
+line vty 0 15
+login local
+transport input ssh
+! maybe redundant
+transport preferred none
+ 
+! Set VTP mode to transparent (no auto VLAN propagation)
+! Set STP mode to Rapid PVST+ (prefer for non-Fabric compatibility)
+! Enable extended STP system ID
+! Set Fabric Node to be STP Root for all local VLANs
+! Enable STP Root Guard to prevent non-Fabric nodes from becoming Root
+! Confirm whether vtp mode transparent below is needed
+ 
+vtp mode transparent
+!
+spanning-tree mode rapid-pvst
+!
+spanning-tree extend system-id
+no udld enable
+!
+errdisable recovery cause all
+!
+errdisable recovery interval 300
+!
+ip routing
+!
+ip multicast-routing
+!
+ip pim ssm default
+!
+! Enable SNMP and RW access based on ACL
+!
+snmp-server community ${snmpRO} RO
+!
+snmp-server community ${snmpRW} RW
+!
+</#list>
+</#if>
+ 
+hostname ${hostname}
+!
+ 
+!Config below applies only on underlay orchestration
+ 
+!
+! Setup a Loopback & IP for Underlay reachability (ID)
+! Add Loopback to Underlay Routing (ISIS)
+!
+interface loopback 0
+description Fabric Node Router ID
+ip address ${xtrIp} 255.255.255.255
+ip router isis
+ip pim sparse-mode
+clns mtu 1400
+! Set MTU to be Jumbo (9100, some do not support 9216)
+!
+${systemMtu}
+!
+!
+ip multicast-routing
+!
+! FABRIC UNDERLAY ROUTING CONFIG:
+!
+! Enable ISIS for Underlay Routing
+! Specify the ISIS Network ID (e.g. encoded Loop IP)
+! Specific the ISIS domain password
+! Enable ISPF & FRR Load-Sharing
+! Enable BFD on all (Underlay) links
+!
+router isis
+net ${isisNetAddress}
+domain-password ${isisPassword}
+ispf level-1-2
+metric-style wide
+nsf ietf
+log-adjacency-changes
+bfd all-interfaces
+! passive-interface loopback 0
+!
+! FABRIC UNDERLAY INTERFACE CONFIG:
+! Enable ISIS for Underlay Routing on all uplink interfaces
+!
+interface TenGigabitEthernetx/x/x
+ description Fabric Physical Link
+ no switchport
+ dampening
+ ip address x.x.x.x 255.255.255.252
+ ip router isis
+ logging event link-status
+ load-interval 30
+ bfd interval 500 min_rx 50 multiplier 3
+ no bfd echo
+ isis network point-to-point
+ip pim sparse-mode
