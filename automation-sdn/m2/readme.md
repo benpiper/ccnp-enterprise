@@ -2,7 +2,7 @@
 
 ## Cisco DNA Center sandbox
 
-The public sandbox URL is <https://dcloud-dna c-ctf-inst-rtp.cisco.com/>
+The public sandbox URL is <https://dcloud-dnac-ctf-inst-rtp.cisco.com/>
 
 ## Cisco SD-Access sandbox
 
