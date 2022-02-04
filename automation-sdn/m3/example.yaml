@@ -1,0 +1,8 @@
+---
+- name: Enable OSPF
+  nclu:
+    commands:
+    - add ospf router-id {{ rid }}
+    - add ospf network {{ prefix }} area {{ area }}
+    atomic: true
+    description: "Enable OSPF"
