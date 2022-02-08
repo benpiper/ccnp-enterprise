@@ -1,19 +1,33 @@
 import json
 import requests
-import urllib3
 from requests.auth import HTTPBasicAuth
-# Authenticate to the vManage controller. It uses cookies for authentication, so we won't have to manually store and pass a token as before.
+
+# The vManage controller uses cookies for authentication
+
 s = requests.Session()
 data =  {
-            'j_username':  "devnetuser",
-            'j_password':  "RG!_Yw919_83"
+            'j_username':  'admin',
+            'j_password':  'C1sco12345'
         }
-url = "https://sandbox-sdwan-1.cisco.com/j_security_check"
-response = s.post(url, data=data, verify=False)
-# Use the vManage API to view devices
-url = "https://sandbox-sdwan-1.cisco.com/dataservice/device"
-url = "https://sandbox-sdwan-1.cisco.com/dataservice/device/omp/routes/received?deviceId=10.10.1.3"
+headers = {'Content-type': 'application/x-www-form-urlencoded'}
+url = "https://10.10.20.90:8443/j_security_check"
+response = s.post(url, headers=headers, data=data, verify=False)
 
+# To avoid TLS errors, add a DNS or hosts record for "vmanage"
+# and use the URL https://vmanage:8443/j_security_check
+
+# Use the vManage API to view devices
+
+url = "https://10.10.20.90:8443/dataservice/device"
 response = s.get(url, data=data, verify=False)
-# The response contains column heading definitions, so to show only the interesting information, we'll restrict the output to the "data" object.
+
+print(json.dumps(response.json(), indent=2))
+
+url = "https://10.10.20.90:8443/dataservice/device/omp/routes/received?deviceId=10.10.1.13"
+response = s.get(url, data=data, verify=False)
+
+# The response has extraneous output, so we show only the "data" heading.
+
 print(json.dumps(response.json()["data"], indent=2))
+
+# SD-WAN API documentation: https://developer.cisco.com/docs/sdwan/
