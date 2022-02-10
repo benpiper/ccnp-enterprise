@@ -1,6 +1,6 @@
 # Start Here
 
-Course: [Implementing OSPF](pluralsight.pxf.io/ORoqGQ)
+Course: [Implementing OSPF](https://pluralsight.pxf.io/ORoqGQ)
 
 ## Router Configurations
 

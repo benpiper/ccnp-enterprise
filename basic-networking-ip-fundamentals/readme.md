@@ -1,6 +1,6 @@
 # Start Here
 
-Course: [Basic Networking and IP Fundamentals](pluralsight.pxf.io/WDJ5BP)
+Course: [Basic Networking and IP Fundamentals](https://pluralsight.pxf.io/WDJ5BP)
 
 ## Router Configurations
 

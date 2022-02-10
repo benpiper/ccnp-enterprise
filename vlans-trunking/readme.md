@@ -1,3 +1,3 @@
 # Start Here
 
-Course: [VLANs and Trunking](pluralsight.pxf.io/RyYQJ9)
+Course: [VLANs and Trunking](https://pluralsight.pxf.io/RyYQJ9)

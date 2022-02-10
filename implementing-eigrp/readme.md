@@ -1,6 +1,6 @@
 # Start Here
 
-Course: [Implementing EIGRP](pluralsight.pxf.io/n1jMD6)
+Course: [Implementing EIGRP](https://pluralsight.pxf.io/n1jMD6)
 
 ## Router Configurations
 
