@@ -1,5 +1,7 @@
 # Start Here
 
+Course: [Basic Networking and IP Fundamentals](pluralsight.pxf.io/WDJ5BP)
+
 ## Router Configurations
 
 [Starting device configurations](before)—Use if you're setting up your own lab (e.g. GNS3)

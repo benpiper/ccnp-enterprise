@@ -1,5 +1,7 @@
 # Cisco Enterprise Networks (ENCOR and ENARSI)
 
+Full course list: [Cisco CCNP Enterprise](pluralsight.pxf.io/jWDbKe)
+
 ## Course Exercise files
 
 [Basic Networking and IP Fundamentals](basic-networking-ip-fundamentals)
@@ -20,7 +22,7 @@
 
 [NAT and Security](nat-security)
 
-802.11 Wireless
+[802.11 Wireless](pluralsight.pxf.io/Jron5R)
 
 [Automation and SDN](automation-sdn)
 
