@@ -1,6 +1,6 @@
 # Cisco Enterprise Networks (ENCOR and ENARSI)
 
-Full course list: [Cisco CCNP Enterprise](pluralsight.pxf.io/jWDbKe)
+Full course list: [Cisco CCNP Enterprise](https://pluralsight.pxf.io/jWDbKe)
 
 ## Course Exercise files
 
