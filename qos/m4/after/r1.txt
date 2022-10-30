@@ -1,0 +1,205 @@
+version 15.9
+no service timestamps debug uptime
+no service timestamps log uptime
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!         
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!
+no cdp log mismatch duplex
+!
+ip tcp synwait-time 5
+!
+class-map match-all af43
+ match dscp af43 
+class-map match-all af11
+ match dscp af11 
+class-map match-all icmp
+ match protocol icmp
+!
+policy-map cbwfq
+ class af43
+  bandwidth 1000
+  queue-limit 5 packets
+ class af11
+  bandwidth 2000
+  random-detect
+ class class-default
+  fair-queue
+  random-detect
+policy-map ingresspolicy
+ class class-default
+  police cir 500000 bc 93750 be 187500 conform-action transmit  exceed-action set-dscp-transmit af13 violate-action drop 
+policy-map mark
+ class icmp
+  set dscp af43
+ class class-default
+  set dscp af11
+policy-map llq
+ class icmp
+  priority percent 10
+!
+! 
+!
+!
+!
+!
+crypto isakmp policy 1
+ encr aes
+ hash sha256
+ authentication pre-share
+ group 14
+crypto isakmp key Pluralsight address 10.10.10.1     
+!
+!
+crypto ipsec transform-set transformset esp-aes esp-sha-hmac 
+ mode tunnel
+!
+!
+crypto ipsec profile myprofile
+ set transform-set transformset 
+!
+!
+!
+!
+!
+!
+interface Loopback20
+ ip address 2.2.2.2 255.255.255.255
+ ipv6 address 2001:DB8::20/128
+ ospfv3 1 ipv6 area 0
+!
+interface GigabitEthernet0/0
+ ip address 2.0.0.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+ service-policy input mark
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ ip address 10.10.30.2 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ ip address 12.12.12.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+ service-policy output llq
+!         
+router ospfv3 1
+ router-id 2.2.2.2
+ !
+ address-family ipv6 unicast
+ exit-address-family
+!
+router ospf 1
+ network 2.2.2.2 0.0.0.0 area 0
+ network 12.12.12.2 0.0.0.0 area 0
+ network 0.0.0.0 255.255.255.255 area 0
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 10.10.30.10 remote-as 65555
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 ioam timestamp
+!         
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+ transport input none
+!
+no scheduler allocate
+!         
+end
