@@ -2,8 +2,6 @@
 
 ## Course Exercise files
 
-*If you encounter any issues with lab configurations, please [email me directly](mailto:punk.desk7296@fastmail.com).*
-
 [Basic Networking and IP Fundamentals](basic-networking-ip-fundamentals)
 
 [Implementing OSPF](implementing-ospf)
