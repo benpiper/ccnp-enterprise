@@ -11,7 +11,7 @@
 - [SW2](m2/SW2.txt)
 - [SW3](m2/SW3.txt)
 - [SW4](m2/SW4.txt)
-- [Port mappings](m2/port mappings.txt)
+- [Port mappings](m2/port%20mappings.txt)
 
 ### Module 4 — Ending Configurations
 - [SW1](m4/SW1.txt)

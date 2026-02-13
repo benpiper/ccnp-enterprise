@@ -6,8 +6,8 @@ The easiest way to set up your troubleshooting lab is to import the starting top
 
 ## Topology Diagrams
 
-- [L2 topology](L2 topology.png)
-- [L3 topology](L3 topology.png)
+- [L2 topology](L2%20topology.png)
+- [L3 topology](L3%20topology.png)
 
 ## Starting Configuration Files
 
