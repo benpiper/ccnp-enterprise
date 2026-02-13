@@ -1,0 +1,19 @@
+# Troubleshooting IP Services
+
+## Lab Setup
+
+The easiest way to set up your troubleshooting lab is to import the starting topology into Cisco VIRL or [Cisco Modeling Labs](https://developer.cisco.com/modeling-labs/) (CML). Alternatively, you can manually set up your own lab in GNS3.
+
+## Topology Diagrams
+
+- [L2 topology](L2 topology.png)
+- [L3 topology](L3 topology.png)
+
+## Starting Configuration Files
+
+### GNS3
+- [Individual device configurations](m2/configs)
+
+### VIRL/CML
+- [VIRL topology file](m2/virl/infrastructure-services-ccnp-300-135-tshoot.virl)
+- [CML lab configuration](m2/cml/troubleshooting-ip-services.yaml)
